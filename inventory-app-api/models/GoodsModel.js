@@ -1,8 +1,8 @@
 import { Sequelize } from "sequelize"
-import db from "../config/Database"
-import Types from "./TypeModel"
-import Categories from "./CategoryModel"
-import Units from "./UnitModel"
+import db from "../config/Database.js"
+import Types from "./TypeModel.js"
+import Categories from "./CategoryModel.js"
+import Units from "./UnitModel.js"
 
 const { DataTypes } = Sequelize
 
