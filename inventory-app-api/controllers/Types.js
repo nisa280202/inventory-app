@@ -20,6 +20,9 @@ export const getTypeById = async (req, res) => {
                 uuid: req.params.id
             }
         })
+
+        if (!response) return res.status(404).json({ msg: "Type tidak ditemukan" })
+
         res.status(200).json(response)
     } catch (error) {
         res.status(500).json({ msg: error.message })

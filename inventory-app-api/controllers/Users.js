@@ -1,5 +1,6 @@
 import Users from "../models/UserModel.js"
 import argon2 from "argon2"
+import validator from "validator"
 
 export const getUsers = async (req, res) => {
     try {
@@ -20,6 +21,9 @@ export const getUserById = async (req, res) => {
                 uuid: req.params.id
             }
         })
+
+        if (!response) return res.status(404).json({ msg: "User tidak ditemukan" })
+
         res.status(200).json(response)
     } catch (error) {
         res.status(500).json({ msg: error.message })
@@ -27,7 +31,11 @@ export const getUserById = async (req, res) => {
 }
 
 export const createUser = async (req, res) => {
-    const {name, email, password, confPassword, role, images} = req.body
+    const { name, email, password, confPassword, role, images } = req.body
+    
+    if (!validator.isEmail(email)) {
+        return res.status(400).json({ msg: "Invalid email format" });
+    }
 
     if (password !== confPassword) return res.status(400).json({ msg: "Password dan Confirm Password tidak cocok" })
     const hashPassword = await argon2.hash(password)
@@ -55,8 +63,12 @@ export const updateUser = async (req, res) => {
 
     if (!user) return res.status(404).json({ msg: "User tidak ditemukan" })
 
-    const {name, email, password, confPassword, role, images} = req.body
+    const { name, email, password, confPassword, role, images } = req.body
     let hashPassword
+
+    if (!validator.isEmail(email)) {
+        return res.status(400).json({ msg: "Invalid email format" });
+    }
 
     if (password === "" || password === null) {
         hashPassword = user.password
