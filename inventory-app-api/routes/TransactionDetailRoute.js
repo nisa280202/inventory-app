@@ -6,13 +6,14 @@ import {
     updateTransactionDetail, 
     deleteTransactionDetail 
 } from "../controllers/TransactionDetails.js"
+import { verifyUser, warehouseStaffOnly } from "../middleware/AuthUser.js"
 
 const router = express.Router()
 
-router.get('/transaction_details', getTransactionDetails)
-router.get('/transaction_details/:id', getTransactionDetailById)
-router.post('/transaction_details', createTransactionDetail)
-router.patch('/transaction_details/:id', updateTransactionDetail)
-router.delete('/transaction_details/:id', deleteTransactionDetail)
+router.get('/transaction-details', verifyUser, getTransactionDetails)
+router.get('/transaction-details/:id', verifyUser, getTransactionDetailById)
+router.post('/transaction-details', verifyUser, warehouseStaffOnly, createTransactionDetail)
+router.patch('/transaction-details/:id', verifyUser, warehouseStaffOnly, updateTransactionDetail)
+router.delete('/transaction-details/:id', verifyUser, warehouseStaffOnly, deleteTransactionDetail)
 
 export default router
