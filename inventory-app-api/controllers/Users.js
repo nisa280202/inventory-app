@@ -31,7 +31,7 @@ export const getUserById = async (req, res) => {
 }
 
 export const createUser = async (req, res) => {
-    const { name, email, password, confPassword, role, images } = req.body
+    const { name, email, password, confPassword, role } = req.body
     
     if (!validator.isEmail(email)) {
         return res.status(400).json({ msg: "Invalid email format" });
@@ -41,12 +41,15 @@ export const createUser = async (req, res) => {
     const hashPassword = await argon2.hash(password)
     
     try {
+        let imagePath = ""
+        if (req.file) imagePath = req.normalizedImagePath
+
         await Users.create({
             name: name, 
             email: email,
             password: hashPassword,
             role: role,
-            images: images
+            images: imagePath || null
         })
         res.status(201).json({ msg: "User berhasil ditambahkan" })
     } catch (error) {
@@ -63,7 +66,7 @@ export const updateUser = async (req, res) => {
 
     if (!user) return res.status(404).json({ msg: "User tidak ditemukan" })
 
-    const { name, email, password, confPassword, role, images } = req.body
+    const { name, email, password, confPassword, role } = req.body
     let hashPassword
 
     if (!validator.isEmail(email)) {
@@ -79,12 +82,15 @@ export const updateUser = async (req, res) => {
     if (password !== confPassword) return res.status(400).json({ msg: "Password dan Confirm Password tidak cocok" })
 
     try {
+        let imagePath = ""
+        if (req.file) imagePath = req.normalizedImagePath
+
         await Users.update({
             name: name, 
             email: email,
             password: hashPassword,
             role: role,
-            images: images
+            images: imagePath || null
         }, {
             where: {
                 id: user.id

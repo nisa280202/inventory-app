@@ -34,12 +34,15 @@ export const getGoodsById = async (req, res) => {
 }
 
 export const createGoods = async (req, res) => {
-    const { name, images, price, stock, typeId, categoryId, unitId } = req.body
+    const { name, price, stock, typeId, categoryId, unitId } = req.body
 
     try {
+        let imagePath = ""
+        if (req.file) imagePath = req.normalizedImagePath
+
         await Goods.create({
             name: name,
-            images: images,
+            images: imagePath || null,
             price: price,
             stock: stock || 0, // Set stock default menjadi 0
             typeId: typeId,
@@ -62,12 +65,15 @@ export const updateGoods = async (req, res) => {
 
     if (!goods) return res.status(404).json({ msg: "Goods tidak ditemukan" })
 
-    const { name, images, price, stock, typeId, categoryId, unitId } = req.body
+    const { name, price, stock, typeId, categoryId, unitId } = req.body
     
     try {
+        let imagePath = ""
+        if (req.file) imagePath = req.normalizedImagePath
+
         await Goods.update({
             name: name,
-            images: images,
+            images: imagePath || null,
             price: price,
             stock: stock,
             typeId: typeId,
