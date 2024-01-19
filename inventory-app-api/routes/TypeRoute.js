@@ -6,13 +6,14 @@ import {
     updateType, 
     deleteType 
 } from "../controllers/Types.js"
+import { verifyUser, officeStaffOnly } from "../middleware/AuthUser.js"
 
 const router = express.Router()
 
-router.get('/types', getTypes)
-router.get('/types/:id', getTypeById)
-router.post('/types', createType)
-router.patch('/types/:id', updateType)
-router.delete('/types/:id', deleteType)
+router.get('/types', verifyUser, getTypes)
+router.get('/types/:id', verifyUser, getTypeById)
+router.post('/types', verifyUser, officeStaffOnly, createType)
+router.patch('/types/:id', verifyUser, officeStaffOnly, updateType)
+router.delete('/types/:id', verifyUser, officeStaffOnly, deleteType)
 
 export default router

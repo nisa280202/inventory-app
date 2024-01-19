@@ -6,13 +6,14 @@ import {
     updateUnit, 
     deleteUnit 
 } from "../controllers/Units.js"
+import { verifyUser, officeStaffOnly } from "../middleware/AuthUser.js"
 
 const router = express.Router()
 
-router.get('/units', getUnits)
-router.get('/units/:id', getUnitById)
-router.post('/units', createUnit)
-router.patch('/units/:id', updateUnit)
-router.delete('/units/:id', deleteUnit)
+router.get('/units', verifyUser, getUnits)
+router.get('/units/:id', verifyUser, getUnitById)
+router.post('/units', verifyUser, officeStaffOnly, createUnit)
+router.patch('/units/:id', verifyUser, officeStaffOnly, updateUnit)
+router.delete('/units/:id', verifyUser, officeStaffOnly, deleteUnit)
 
 export default router

@@ -6,13 +6,14 @@ import {
     updateTransaction, 
     deleteTransaction 
 } from "../controllers/Transactions.js"
+import { verifyUser, officeStaffOnly } from "../middleware/AuthUser.js"
 
 const router = express.Router()
 
-router.get('/transactions', getTransactions)
-router.get('/transactions/:id', getTransactionById)
-router.post('/transactions', createTransaction)
-router.patch('/transactions/:id', updateTransaction)
-router.delete('/transactions/:id', deleteTransaction)
+router.get('/transactions', verifyUser, getTransactions)
+router.get('/transactions/:id', verifyUser, getTransactionById)
+router.post('/transactions', verifyUser, officeStaffOnly, createTransaction)
+router.patch('/transactions/:id', verifyUser, officeStaffOnly, updateTransaction)
+router.delete('/transactions/:id', verifyUser, officeStaffOnly, deleteTransaction)
 
 export default router
