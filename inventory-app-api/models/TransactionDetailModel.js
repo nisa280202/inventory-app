@@ -47,8 +47,8 @@ const TransactionDetails = db.define('transaction_details', {
     freezeTableName: true
 })
 
-Goods.hasMany(TransactionDetails)
-TransactionDetails.belongsTo(Goods, {foreignKey: 'goodsId'})
+Goods.hasMany(TransactionDetails, { foreignKey: 'goodsId' })
+TransactionDetails.belongsTo(Goods, { foreignKey: 'goodsId' })
 
 Transactions.hasMany(TransactionDetails)
 TransactionDetails.belongsTo(Transactions, {foreignKey: 'transactionId'})
