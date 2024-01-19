@@ -6,13 +6,14 @@ import {
     updateGoods, 
     deleteGoods 
 } from "../controllers/Goods.js"
+import { verifyUser, officeStaffOnly } from "../middleware/AuthUser.js"
 
 const router = express.Router()
 
-router.get('/goods', getGoods)
-router.get('/goods/:id', getGoodsById)
-router.post('/goods', createGoods)
-router.patch('/goods/:id', updateGoods)
-router.delete('/goods/:id', deleteGoods)
+router.get('/goods', verifyUser, getGoods)
+router.get('/goods/:id', verifyUser, getGoodsById)
+router.post('/goods', verifyUser, officeStaffOnly, createGoods)
+router.patch('/goods/:id', verifyUser, officeStaffOnly, updateGoods)
+router.delete('/goods/:id', verifyUser, officeStaffOnly, deleteGoods)
 
 export default router
