@@ -4,10 +4,10 @@ import validator from "validator"
 
 export const getUsers = async (req, res) => {
     try {
-        const response = await Users.findAll({
-            attributes: ['uuid', 'name', 'email', 'role', 'images']
+        const user = await Users.findAll({
+            attributes: ['id', 'uuid', 'name', 'email', 'role', 'images']
         })
-        res.status(200).json(response)
+        res.status(200).json(user)
     } catch (error) {
         res.status(500).json({ msg: error.message })
     }
@@ -15,16 +15,16 @@ export const getUsers = async (req, res) => {
 
 export const getUserById = async (req, res) => {
     try {
-        const response = await Users.findOne({
+        const user = await Users.findOne({
             attributes: ['uuid', 'name', 'email', 'role', 'images'],
             where: {
                 uuid: req.params.id
             }
         })
 
-        if (!response) return res.status(404).json({ msg: "User tidak ditemukan" })
+        if (!user) return res.status(404).json({ msg: "User tidak ditemukan" })
 
-        res.status(200).json(response)
+        res.status(200).json(user)
     } catch (error) {
         res.status(500).json({ msg: error.message })
     }
@@ -102,7 +102,9 @@ export const deleteUser = async (req, res) => {
             uuid: req.params.id
         }
     })
+
     if (!user) return res.status(404).json({ msg: "User tidak ditemukan" })
+
     try {
         await Users.destroy({
             where: {

@@ -3,10 +3,10 @@ import { Op } from "sequelize"
 
 export const getCategories = async (req, res) => {
     try {
-        const response = await Categories.findAll({
+        const category = await Categories.findAll({
             attributes: ['id', 'uuid', 'name']
         })
-        res.status(200).json(response)
+        res.status(200).json(category)
     } catch (error) {
         res.status(500).json({ msg: error.message })
     }
@@ -14,16 +14,16 @@ export const getCategories = async (req, res) => {
 
 export const getCategoryById = async (req, res) => {
     try {
-        const response = await Categories.findOne({
+        const category = await Categories.findOne({
             attributes: ['uuid', 'name'],
             where: {
                 uuid: req.params.id
             }
         })
 
-        if (!response) return res.status(404).json({ msg: "Category tidak ditemukan" })
+        if (!category) return res.status(404).json({ msg: "Category tidak ditemukan" })
 
-        res.status(200).json(response)
+        res.status(200).json(category)
     } catch (error) {
         res.status(500).json({ msg: error.message })
     }

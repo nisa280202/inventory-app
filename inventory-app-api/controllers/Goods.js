@@ -5,11 +5,11 @@ import Units from "../models/UnitModel.js"
 
 export const getGoods = async (req, res) => {
     try {
-        const response = await Goods.findAll({
+        const goods = await Goods.findAll({
             include: [Types, Categories, Units],
-            attributes: ['uuid', 'name', 'images', 'price', 'stock']
+            attributes: ['id', 'uuid', 'name', 'images', 'price', 'stock']
         })
-        res.status(200).json(response)
+        res.status(200).json(goods)
     } catch (error) {
         res.status(500).json({ msg: error.message })
     }
@@ -17,7 +17,7 @@ export const getGoods = async (req, res) => {
 
 export const getGoodsById = async (req, res) => {
     try {
-        const response = await Goods.findOne({
+        const goods = await Goods.findOne({
             where: {
                 uuid: req.params.id,
             },
@@ -25,9 +25,9 @@ export const getGoodsById = async (req, res) => {
             attributes: ['uuid', 'name', 'images', 'price', 'stock']
         })
     
-        if (!response) return res.status(404).json({ msg: "Goods tidak ditemukan" })
+        if (!goods) return res.status(404).json({ msg: "Goods tidak ditemukan" })
     
-        res.status(200).json(response)
+        res.status(200).json(goods)
     } catch (error) {
         res.status(500).json({ msg: error.message })
     }

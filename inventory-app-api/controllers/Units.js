@@ -3,10 +3,10 @@ import { Op } from "sequelize"
 
 export const getUnits = async (req, res) => {
     try {
-        const response = await Units.findAll({
+        const unit = await Units.findAll({
             attributes: ['id', 'uuid', 'name']
         })
-        res.status(200).json(response)
+        res.status(200).json(unit)
     } catch (error) {
         res.status(500).json({ msg: error.message })
     }
@@ -14,16 +14,16 @@ export const getUnits = async (req, res) => {
 
 export const getUnitById = async (req, res) => {
     try {
-        const response = await Units.findOne({
+        const unit = await Units.findOne({
             attributes: ['uuid', 'name'],
             where: {
                 uuid: req.params.id
             }
         })
 
-        if (!response) return res.status(404).json({ msg: "Unit tidak ditemukan" })
+        if (!unit) return res.status(404).json({ msg: "Unit tidak ditemukan" })
 
-        res.status(200).json(response)
+        res.status(200).json(unit)
     } catch (error) {
         res.status(500).json({ msg: error.message })
     }

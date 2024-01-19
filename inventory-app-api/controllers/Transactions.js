@@ -3,10 +3,10 @@ import Users from "../models/UserModel.js"
 
 export const getTransactions = async (req, res) => {
     try {
-        const response = await Transactions.findAll({
-            attributes: ['uuid', 'type', 'date', 'sender', 'recipient', 'userId']
+        const transaction = await Transactions.findAll({
+            attributes: ['id', 'uuid', 'type', 'date', 'sender', 'recipient', 'userId']
         })
-        res.status(200).json(response)
+        res.status(200).json(transaction)
     } catch (error) {
         res.status(500).json({ msg: error.message })
     }
@@ -14,16 +14,16 @@ export const getTransactions = async (req, res) => {
 
 export const getTransactionById = async (req, res) => {
     try {
-        const response = await Transactions.findOne({
+        const transaction = await Transactions.findOne({
             where: {
                 uuid: req.params.id
             },
             include: Users
         })
 
-        if (!response) return res.status(404).json({ msg: "Transaction tidak ditemukan" })
+        if (!transaction) return res.status(404).json({ msg: "Transaction tidak ditemukan" })
 
-        res.status(200).json(response)
+        res.status(200).json(transaction)
     } catch (error) {
         res.status(500).json({ msg: error.message })
     }
@@ -54,9 +54,7 @@ export const updateTransaction = async (req, res) => {
         },
     })
     
-    if (!transaction) {
-        return res.status(404).json({ msg: "Transaction tidak ditemukan" })
-    }
+    if (!transaction) return res.status(404).json({ msg: "Transaction tidak ditemukan" })
     
     const { type, date, sender, recipient } = req.body
     
@@ -86,9 +84,7 @@ export const deleteTransaction = async (req, res) => {
         },
     })
     
-    if (!transaction) {
-        return res.status(404).json({ msg: "Transaction tidak ditemukan" })
-    }
+    if (!transaction) return res.status(404).json({ msg: "Transaction tidak ditemukan" })
 
     try {
         await Transactions.destroy({
