@@ -4,7 +4,7 @@ import { Op } from "sequelize"
 export const getTypes = async (req, res) => {
     try {
         const response = await Types.findAll({
-            attributes: ['uuid', 'name']
+            attributes: ['id', 'uuid', 'name']
         })
         res.status(200).json(response)
     } catch (error) {

@@ -4,7 +4,7 @@ import { Op } from "sequelize"
 export const getCategories = async (req, res) => {
     try {
         const response = await Categories.findAll({
-            attributes: ['uuid', 'name']
+            attributes: ['id', 'uuid', 'name']
         })
         res.status(200).json(response)
     } catch (error) {
