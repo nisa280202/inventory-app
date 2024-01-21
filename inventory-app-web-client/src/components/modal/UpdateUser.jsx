@@ -84,7 +84,6 @@ const UpdateUser = ({ open, onClose, onUpdateUser, user }) => {
         formData.append('email', updateUser.email)
         formData.append('role', updateUser.role)
         formData.append('images', updateUser.images)
-    
         onUpdateUser(formData)
         onClose()
         setUpdateUser({

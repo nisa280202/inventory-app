@@ -71,7 +71,6 @@ export const updateUser = async (req, res) => {
     })
 
     if (!user) return res.status(404).json({ msg: "User tidak ditemukan" })
-
     const { name, email, password, confPassword, role } = req.body
     let hashPassword
 
@@ -79,7 +78,7 @@ export const updateUser = async (req, res) => {
         return res.status(400).json({ msg: "Invalid email format" });
     }
 
-    if (password === "" || password === null) {
+    if (password === "" || password === null || password == undefined) {
         hashPassword = user.password
     } else {
         hashPassword = await argon2.hash(password)
@@ -102,6 +101,7 @@ export const updateUser = async (req, res) => {
                 id: user.id
             }
         })
+
         res.status(200).json({ msg: "User Updated" })
     } catch (error) {
         res.status(400).json({ msg: error.message })

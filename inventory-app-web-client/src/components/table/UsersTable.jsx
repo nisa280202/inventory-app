@@ -42,17 +42,19 @@ const UsersTable = () => {
         }
 
         fetchData()
-    }, [users])  
+    }, [])  
     
     const onUpdateUser = async (user) => {
+        console.log(user)
         try {
             const token = localStorage.getItem('token')
             const config = {
                 headers: {
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${token}`
                 }
             }
-            await axios.patch(`http://localhost:5000/users/${user.uuid}`, user, config)
+            await axios.patch(`http://localhost:5000/users/${user.get('uuid')}`, user, config)
 
             Swal.fire({
                 icon: 'success',
