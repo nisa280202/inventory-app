@@ -3,10 +3,16 @@ import { Op } from "sequelize"
 
 export const getCategories = async (req, res) => {
     try {
+        const totalCategories = await Categories.count()
+
         const category = await Categories.findAll({
             attributes: ['id', 'uuid', 'name']
         })
-        res.status(200).json(category)
+
+        res.status(200).json({
+            totalCategories,
+            category
+        })
     } catch (error) {
         res.status(500).json({ msg: error.message })
     }

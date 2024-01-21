@@ -4,10 +4,16 @@ import validator from "validator"
 
 export const getUsers = async (req, res) => {
     try {
+        const totalUsers = await Users.count()
+
         const user = await Users.findAll({
             attributes: ['id', 'uuid', 'name', 'email', 'role', 'images']
         })
-        res.status(200).json(user)
+
+        res.status(200).json({
+            totalUsers,
+            user
+        })
     } catch (error) {
         res.status(500).json({ msg: error.message })
     }

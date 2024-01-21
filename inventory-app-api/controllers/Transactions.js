@@ -3,10 +3,21 @@ import Users from "../models/UserModel.js"
 
 export const getTransactions = async (req, res) => {
     try {
+        const totalTransactions = await Transactions.count()
+
+        const uniqueSendersCount = await Transactions.count({ distinct: true, col: 'sender' })
+        const uniqueRecipientsCount = await Transactions.count({ distinct: true, col: 'recipient' })
+
         const transaction = await Transactions.findAll({
             attributes: ['id', 'uuid', 'type', 'date', 'sender', 'recipient', 'userId']
         })
-        res.status(200).json(transaction)
+
+        res.status(200).json({
+            totalTransactions,
+            uniqueSendersCount,
+            uniqueRecipientsCount,
+            transaction
+        })
     } catch (error) {
         res.status(500).json({ msg: error.message })
     }

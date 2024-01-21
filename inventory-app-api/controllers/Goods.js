@@ -15,6 +15,32 @@ export const getGoods = async (req, res) => {
     }
 }
 
+export const getGoodsStats = async (req, res) => {
+    try {
+        const totalGoods = await Goods.count()
+
+        const topStockGoods = await Goods.findAll({
+            order: [['stock', 'DESC']],
+            limit: 5,
+            attributes: ['uuid', 'name', 'stock']
+        })
+
+        const bottomStockGoods = await Goods.findAll({
+            order: [['stock', 'ASC']],
+            limit: 5,
+            attributes: ['uuid', 'name', 'stock']
+        })
+
+        res.status(200).json({
+            totalGoods,
+            topStockGoods,
+            bottomStockGoods
+        })
+    } catch (error) {
+        res.status(500).json({ msg: error.message })
+    }
+}
+
 export const getGoodsById = async (req, res) => {
     try {
         const goods = await Goods.findOne({
