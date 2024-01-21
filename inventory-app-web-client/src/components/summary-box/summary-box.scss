@@ -1,0 +1,65 @@
+@use '../../scss/abstracts/' as *;
+
+.box-container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 820px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+    margin-top: 10px;
+    gap: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.box {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.chart-stock {
+    margin-top: -30px;
+    margin-right: -20px;
+    margin-left: -2px;
+}
+
+.summary-box {
+    @include flex(stretch, flex-start);
+    
+    &__icon {
+        width: 25%;
+        color: $orange;
+
+        &__value {
+            margin-bottom: 30%;
+            font-weight: 700;
+        }
+    }
+
+    &__info {
+        width: 70%;
+        @include flex(flex-start, space-between);
+        flex-direction: column;
+
+        &__title {
+            font-size: $fontSizeMedium;
+            font-weight: 700;
+            line-height: 1.2;
+
+            span {
+                font-size: 13px;
+                font-weight: 400;
+            }
+        }
+
+        &__value {
+            font-weight: 700;
+            font-size: $fontSizeLarge;
+            color: $purple;
+        }
+    }
+}

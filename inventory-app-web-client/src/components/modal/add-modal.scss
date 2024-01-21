@@ -1,0 +1,159 @@
+@use '../../scss/abstracts/' as *;
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: rgb(141, 141, 141);
+}
+
+.modal-content {
+    padding: 20px;
+}
+
+.invalid-message {
+    background-color: #f44336;
+    color: #fff;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 8px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: 600;
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    input[type='file'] {
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+        cursor: pointer;
+    }
+
+    input[type='file']:hover {
+        background-color: #f0f0f0;
+    }
+
+    div {
+        display: flex;
+        gap: 10px;
+    }
+
+    input[type="radio"] {
+        margin-right: 5px;
+    }
+
+    .file-upload-label {
+        font-size: 14px;
+        margin-top: 5px;
+        display: block;
+    }
+}
+
+.input-picture {
+    label {
+        display: block;
+        margin-bottom: 2px;
+        color: #333;
+        font-weight: 600;
+    }
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+
+    button {
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .bg-blue-500 {
+        background-color: #2196F3;
+        color: #fff;
+    }
+
+    .bg-gray-500 {
+        background-color: #ccc;
+        color: #333;
+    }
+
+    button:hover {
+        opacity: 0.8;
+    }
+
+    button + button {
+        margin-left: 10px;
+    }
+}
+
+.select-field {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    appearance: none;
+    background: url("data:image/svg+xml;utf8,<svg fill='%231E3A8A' height='24' width='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z' /></svg>") no-repeat; /* Menambahkan custom dropdown arrow */
+    background-position: right 8px center;
+}
+
+.select-field::-ms-expand {
+    display: none;
+}
+
+.select-field:disabled {
+    opacity: 0.7;
+}
