@@ -22,6 +22,7 @@ export const verifyUser = async (req, res, next) => {
         })
         if (!user) return res.status(404).json({msg: "User tidak ditemukan"})
     
+        req.user = user
         req.userId = user.id
         req.role = user.role
         next()
@@ -36,7 +37,12 @@ export const superAdminOnly = async (req, res, next) => {
         const authHeader = req.headers["authorization"];
         const token = authHeader && authHeader.split(" ")[1];
 
+        if (!token) {
+            return res.status(401).json({msg: "Mohon login ke akun Anda!"})
+        }
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (!decoded) return res.status(403).json({ msg: "Invalid token" });
 
         const user = await Users.findOne({
             where: {
@@ -57,7 +63,12 @@ export const officeStaffOnly = async (req, res, next) => {
         const authHeader = req.headers["authorization"];
         const token = authHeader && authHeader.split(" ")[1];
 
+        if (!token) {
+            return res.status(401).json({msg: "Mohon login ke akun Anda!"})
+        }
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (!decoded) return res.status(403).json({ msg: "Invalid token" });
 
         const user = await Users.findOne({
             where: {
@@ -78,7 +89,12 @@ export const warehouseStaffOnly = async (req, res, next) => {
         const authHeader = req.headers["authorization"];
         const token = authHeader && authHeader.split(" ")[1];
 
+        if (!token) {
+            return res.status(401).json({msg: "Mohon login ke akun Anda!"})
+        }
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (!decoded) return res.status(403).json({ msg: "Invalid token" });
 
         const user = await Users.findOne({
             where: {
