@@ -18,7 +18,7 @@ function App() {
           <Route index element={ <Dashboard /> } />
           <Route path='users' element={ <Users /> } />
           <Route path='transactions' element={ <Transactions /> } />
-          <Route path='transactions/detail/:id' element={ <DetailTransaction /> } />
+          <Route path='transactions/:uuid' element={ <DetailTransaction /> } />
           <Route path='goods' element={ <Goods /> } />
           <Route path='category-type-unit' element={ <CategoryTypeUnit /> } />
         </Route>
