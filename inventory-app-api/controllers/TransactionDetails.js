@@ -33,6 +33,28 @@ export const getTransactionDetailById = async (req, res) => {
     }
 }
 
+export const getTransactionDetailsByTransactionId = async (req, res) => {
+    const { transactionId } = req.params;
+
+    try {
+        const transactionDetails = await TransactionDetails.findAll({
+            where: {
+                '$transaction.uuid$': transactionId,
+            },
+            include: [Goods, Transactions, Users],
+            attributes: ['uuid', 'stock'],
+        });
+
+        if (!transactionDetails || transactionDetails.length === 0) {
+            return res.status(404).json({ msg: "Detail transactions tidak ditemukan" });
+        }
+
+        res.status(200).json(transactionDetails);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+};
+
 export const createTransactionDetail = async (req, res) => {
     const { stock, goodsId, transactionId } = req.body
 

@@ -61,7 +61,7 @@ const TransactionsTable = ({ searchQuery }) => {
             width: 200,
             renderCell: (params) => (
                 <>
-                    <Link to={`/transactions/detail/${params.row.uuid}`}>
+                    <Link to={`/transactions/${params.row.uuid}`}>
                         {role == 2 ? (
                             <FontAwesomeIcon
                                 icon={faEdit}
