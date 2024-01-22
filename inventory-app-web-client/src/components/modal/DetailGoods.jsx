@@ -16,7 +16,7 @@ const DetailGoods = ({ open, onClose, goods }) => {
                             component="img"
                             alt={goods.name}
                             height="240"
-                            image={`http://localhost:3030/uploads/${goods.picture}`}
+                            image={`http://localhost:5000/uploads/${goods.images}`}
                             style={{
                                 objectFit: 'cover',
                                 borderTopLeftRadius: '8px',
@@ -28,9 +28,9 @@ const DetailGoods = ({ open, onClose, goods }) => {
                             <Typography variant="h5" align="center" style={{ marginBottom: '10px' }}>
                                 {goods.name}
                             </Typography>
-                            <Typography color="text.secondary"><b>Type:</b> {goods.type_name}</Typography>
-                            <Typography color="text.secondary"><b>Category:</b> {goods.category_name}</Typography>
-                            <Typography color="text.secondary"><b>Unit:</b> {goods.unit}</Typography>
+                            <Typography color="text.secondary"><b>Type:</b> {goods.type.name}</Typography>
+                            <Typography color="text.secondary"><b>Category:</b> {goods.category.name}</Typography>
+                            <Typography color="text.secondary"><b>Unit:</b> {goods.unit.name}</Typography>
                             <Typography color="text.secondary"><b>Price:</b> Rp {goods.price.toLocaleString()}</Typography>
                             <Typography color="text.secondary"><b>Stock:</b> {goods.stock}</Typography>
                         </CardContent>

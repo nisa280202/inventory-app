@@ -22,6 +22,7 @@ const GoodsTable = ({ searchQuery }) => {
     const [openDetail, setOpenDetail] = useState(false)
     const [types, setTypes] = useState([])
     const [categories, setCategories] = useState([])
+    const [units, setUnits] = useState([])
     const [page, setPage] = useState(0)
     const [rowPerPage, setRowPerPage] = useState(5)
     const role = localStorage.getItem('role')
@@ -29,7 +30,6 @@ const GoodsTable = ({ searchQuery }) => {
     const handleUpdate = (goods) => {
         setSelectedGoods(goods)
         setOpenUpdate(true)
-        console.log(goods)
     }
 
     const handleDetail = (goods) => {
@@ -57,6 +57,63 @@ const GoodsTable = ({ searchQuery }) => {
         fetchData()
     }, [originalGoods])
 
+    useEffect(() => {
+        async function fetchDataTypes() {
+            try {
+                const token = localStorage.getItem('token')
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+                const type = await axios.get('http://localhost:5000/types', config)
+                setTypes(type.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        fetchDataTypes()
+    }, [])
+
+    useEffect(() => {
+        async function fetchDataUnits() {
+            try {
+                const token = localStorage.getItem('token')
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+                const unit = await axios.get('http://localhost:5000/units', config)
+                setUnits(unit.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        fetchDataUnits()
+    }, [])
+
+    useEffect(() => {
+        async function fetchDataCategories() {
+            try {
+                const token = localStorage.getItem('token')
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+                const category = await axios.get('http://localhost:5000/categories', config)
+                setCategories(category.data.category)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        fetchDataCategories()
+    }, [])
+
     const goods = searchQuery
         ? originalGoods.filter(
             (item) =>
@@ -69,11 +126,12 @@ const GoodsTable = ({ searchQuery }) => {
             const token = localStorage.getItem('token')
             const config = {
                 headers: {
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${token}`,
                 },
             }
 
-            await axios.patch(`http://localhost:5000/goods/${updatedGoods.uuid}`, updatedGoods, config)
+            await axios.patch(`http://localhost:5000/goods/${updatedGoods.get('uuid')}`, updatedGoods, config)
 
             setOriginalGoods((prevGoods) =>
                 prevGoods.map((item) =>
@@ -152,6 +210,7 @@ const GoodsTable = ({ searchQuery }) => {
                         <TableCell className="tableCell">Type</TableCell>
                         <TableCell className="tableCell">Category</TableCell>
                         <TableCell className="tableCell">Stock</TableCell>
+                        <TableCell className="tableCell">Unit</TableCell>
                         {role == 1 || role == 2 ? <TableCell className="tableCell">Actions</TableCell> : null}
                     </TableRow>
                 </TableHead>
@@ -172,6 +231,7 @@ const GoodsTable = ({ searchQuery }) => {
                             <TableCell className="tableCell">{goods.type.name}</TableCell>
                             <TableCell className="tableCell">{goods.category.name}</TableCell>
                             <TableCell className="tableCell">{goods.stock}</TableCell>
+                            <TableCell className="tableCell">{goods.unit.name}</TableCell>
                             {role == 1 || role == 2 ? (
                                 <TableCell>
                                     <FontAwesomeIcon 
@@ -179,17 +239,19 @@ const GoodsTable = ({ searchQuery }) => {
                                         style={{ color: 'orange', marginRight: '8px', fontSize: '16px', cursor: 'pointer' }} 
                                         onClick={() => handleDetail(goods)}
                                     />
-                                    <FontAwesomeIcon 
-                                        icon={faEdit} 
-                                        style={{ color: '#8624DB', marginLeft: '12px', marginRight: '8px', fontSize: '16px', cursor: 'pointer' }}
-                                        onClick={() => handleUpdate(goods)}
-                                    />
                                     {role == 1 ? (
+                                        <div>
+                                        <FontAwesomeIcon 
+                                            icon={faEdit} 
+                                            style={{ color: '#8624DB', marginLeft: '12px', marginRight: '8px', fontSize: '16px', cursor: 'pointer' }}
+                                            onClick={() => handleUpdate(goods)}
+                                        />
                                         <FontAwesomeIcon 
                                             icon={faTrash} 
                                             style={{ color: '#DB190C', marginLeft: '12px', fontSize: '15.5px', cursor: 'pointer' }} 
                                             onClick={() => handleDelete(goods.uuid)}
                                         />
+                                        </div>
                                     ) : null}
                                 </TableCell>
                             ) : null}
@@ -207,7 +269,7 @@ const GoodsTable = ({ searchQuery }) => {
                 onPageChange={handlePageChange}
                 onRowsPerPageChange={handleChangeRowPerPage}
             />
-
+    
             <UpdateGoods
                 open={openUpdate}
                 onClose={() => setOpenUpdate(false)}
@@ -215,6 +277,7 @@ const GoodsTable = ({ searchQuery }) => {
                 goods={selectedGoods}
                 types={types}
                 categories={categories}
+                units={units}
             />
 
             <DetailGoods goods={selectedGoods} open={openDetail} onClose={() => setOpenDetail(false)} />

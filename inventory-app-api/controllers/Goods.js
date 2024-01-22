@@ -101,7 +101,7 @@ export const updateGoods = async (req, res) => {
             name: name,
             images: imagePath || null,
             price: price,
-            stock: stock,
+            stock: stock || null,
             typeId: typeId,
             categoryId: categoryId,
             unitId: unitId,
@@ -110,7 +110,6 @@ export const updateGoods = async (req, res) => {
                 id: goods.id,
             }
         })
-    
         res.status(200).json({ msg: "Goods updated" })
     } catch (error) {
         res.status(400).json({ msg: error.message })

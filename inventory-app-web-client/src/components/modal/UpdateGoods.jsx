@@ -28,17 +28,17 @@ const UpdateGoods = ({ open, onClose, onUpdateGoods, goods, types, categories, u
         if (goods) {
             setUpdateGoods((prevGoods) => ({
                 ...prevGoods,
-                uuid: goods?.uuid || '',
-                typeId: goods?.type.id || '',
-                typeName: goods?.type.name || '',
-                name: goods?.name || '',
-                categoryId: goods?.category.id || '',
-                categoryName: goods?.category.name || '',
-                unitId: goods?.unit.id || '',
-                unitName: goods?.unit.name || '',
-                price: goods?.price || '',
-                images: goods?.images || '',
-                stock: goods?.stock || '',
+                uuid: goods.uuid || '',
+                typeId: goods.type.id || '',
+                typeName: goods.type.name || '',
+                name: goods.name || '',
+                categoryId: goods.category.id || '',
+                categoryName: goods.category.name || '',
+                unitId: goods.unit.id || '',
+                unitName: goods.unit.name || '',
+                price: goods.price || '',
+                images: goods.images || '',
+                stock: goods.stock || '',
             }))
         }
     }, [goods])
@@ -86,7 +86,7 @@ const UpdateGoods = ({ open, onClose, onUpdateGoods, goods, types, categories, u
         formData.append('price', updateGoods.price)
         formData.append('images', updateGoods.images)
         formData.append('stock', updateGoods.stock)
-
+        
         onUpdateGoods(formData)
         onClose()
         setUpdateGoods({
@@ -112,7 +112,6 @@ const UpdateGoods = ({ open, onClose, onUpdateGoods, goods, types, categories, u
                 </button>
                 <div className="modal-content">
                     <h1 className="text-xl text-gray-800 font-semibold mb-5">Update Goods</h1>
-                    {role == 1 ? (
                     <div>
                         <FormControl fullWidth sx={{ marginBottom: 2, marginTop: 2 }}>
                             <InputLabel id="type-label">Type</InputLabel>
@@ -120,7 +119,7 @@ const UpdateGoods = ({ open, onClose, onUpdateGoods, goods, types, categories, u
                                 labelId="type-label"
                                 id="typeId"
                                 name="typeId"
-                                value={updateGoods.typeName}
+                                value={updateGoods.typeId}
                                 label="Type"
                                 onChange={handleInputChange}
                             >
@@ -222,34 +221,20 @@ const UpdateGoods = ({ open, onClose, onUpdateGoods, goods, types, categories, u
                             type="text"
                             value={updateGoods.price}
                             onChange={handleInputChange}
+                            sx={{ marginBottom: 2 }}
                         />
-                        </div>
-                    ) : (
-                        <div>
-                            <TextField
-                                fullWidth
-                                id="name"
-                                name="name"
-                                label="Name"
-                                type="text"
-                                value={updateGoods.name}
-                                onChange={handleInputChange}
-                                sx={{ marginBottom: 2, marginTop: 2 }}
-                                disabled
-                            />
 
-                            <TextField
-                                fullWidth
-                                id="stock"
-                                name="stock"
-                                label="Stock"
-                                type="text"
-                                value={updateGoods.stock}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                    )}
-
+                        <TextField
+                            fullWidth
+                            id="stock"
+                            name="stock"
+                            label="Stock"
+                            type="text"
+                            value={updateGoods?.stock}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                
                     <div className="action-buttons">
                         <button
                             onClick={handleUpdateGoods}
