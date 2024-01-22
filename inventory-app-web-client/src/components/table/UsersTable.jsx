@@ -45,7 +45,6 @@ const UsersTable = () => {
     }, [])  
     
     const onUpdateUser = async (user) => {
-        console.log(user)
         try {
             const token = localStorage.getItem('token')
             const config = {

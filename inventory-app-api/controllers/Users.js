@@ -1,13 +1,19 @@
 import Users from "../models/UserModel.js"
 import argon2 from "argon2"
 import validator from "validator"
+import { Sequelize } from "sequelize"
 
 export const getUsers = async (req, res) => {
     try {
         const totalUsers = await Users.count()
 
         const user = await Users.findAll({
-            attributes: ['id', 'uuid', 'name', 'email', 'role', 'images']
+            attributes: ['id', 'uuid', 'name', 'email', 'role', 'images'],
+            where: {
+                role: {
+                    [Sequelize.Op.not]: 0
+                }
+            }
         })
 
         res.status(200).json({
